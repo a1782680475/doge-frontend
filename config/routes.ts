@@ -114,6 +114,7 @@
     name: '消息中心',
     path: '/notice',
     component: './notice/index',
+    hideInMenu: true
   },
   {
     path: '/',

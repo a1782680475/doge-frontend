@@ -12,7 +12,7 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '多吉后台管理系统',
+  title: '后台管理系统',
   pwa: false,
   // logo: '/logo.png',
   iconfontUrl: '',

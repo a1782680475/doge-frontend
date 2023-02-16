@@ -91,7 +91,7 @@ const Login: React.FC = () => {
         <div className={styles.top}>
           <div className={styles.header}>
             <Link to='/'>
-              <span className={styles.title}>多吉后台管理系统</span>
+              <span className={styles.title}>后台管理系统</span>
             </Link>
           </div>
           <div className={styles.desc}></div>
