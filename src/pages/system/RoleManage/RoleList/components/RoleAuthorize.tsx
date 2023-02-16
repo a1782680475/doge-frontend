@@ -16,7 +16,6 @@ export type RoleAuthorizeProps = {
 const RoleAuthorize: React.FC<RoleAuthorizeProps> = (props) => {
   const { onCancel, onSubmit, visible } = props;
   const permissionTreeRef = useRef<any>(PermissionTree);
-  const [menuIds, setMenuIds] = useState<number[]>([]);
   const [form] = Form.useForm();
   const { Option } = Select;
   const expandedAll = () => {
@@ -51,18 +50,17 @@ const RoleAuthorize: React.FC<RoleAuthorizeProps> = (props) => {
   }
 
   useEffect(() => {
+    form.resetFields();
     queryMenus(props.id).then((data) => {
       const menuIdArray: number[] = [];
       data.forEach((item: { roleId: number, menuId: number }) => {
         menuIdArray.push(item.menuId);
       });
-      setMenuIds(menuIdArray);
-      form.resetFields();
+      form.setFieldValue('permission', menuIdArray)
     });
-  }, [visible])
+  }, [props.id])
   return (
     <Drawer
-      getContainer={false}
       title="角色授权"
       width="30%"
       placement="right"
@@ -139,7 +137,7 @@ const RoleAuthorize: React.FC<RoleAuthorizeProps> = (props) => {
       <Form
         form={form}
         layout="vertical"
-        initialValues={{ permission: menuIds }}
+        initialValues={{ permission: [] }}
       >
         <Form.Item key="permission" name="permission">
           <PermissionTree ref={permissionTreeRef} />

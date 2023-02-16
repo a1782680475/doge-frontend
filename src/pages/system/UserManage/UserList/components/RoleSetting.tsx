@@ -24,7 +24,6 @@ const queryRoles = async (id?: number) => {
 
 const RoleSetting: React.FC<RoleSettingProps> = (props) => {
   const {onCancel, onSubmit, modalVisible} = props;
-  const [roleIds, setRoleIds] = useState<number[]>([]);
   const [form] = Form.useForm();
   useEffect(() => {
     if (modalVisible) {
@@ -35,15 +34,14 @@ const RoleSetting: React.FC<RoleSettingProps> = (props) => {
       data.forEach((item: { userId: number, roleId: number }) => {
         roleIdArray.push(item.roleId);
       });
-      setRoleIds(roleIdArray);
-      form.resetFields();
+      form.setFieldValue('role',roleIdArray);
     });
   }, [modalVisible])
   return (
     <ModalForm
       form={form}
       key="roleSetting"
-      initialValues={{role: roleIds}}
+      initialValues={{role: []}}
       title="角色分配"
       width="500px"
       visible={modalVisible}
