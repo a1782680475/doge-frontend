@@ -1,4 +1,5 @@
 # Doge前端
+<img decoding="async" src="https://user-images.githubusercontent.com/32875468/219337692-1a277d2a-fa56-4d09-862a-a73335462889.png" width="30%">
 
 #### 介绍
 后台管理系统无论在什么业务中都很重要，但是市面上各式各样的系统个人都不怎么满意，因此打算自己从头做一个。  
