@@ -1,9 +1,10 @@
-import { Avatar, List, Typography } from 'antd';
+import { Avatar, List, Popconfirm, Typography } from 'antd';
 
 import React from 'react';
 import classNames from 'classnames';
 import styles from './NoticeList.less';
 import { NoticeType } from './NoticeType';
+import { Confirm } from '@/utils/confirm';
 export type NoticeIconTabProps = {
   type: NoticeType;
   count?: number;
@@ -135,9 +136,14 @@ const NoticeList: React.FC<NoticeIconTabProps> = ({
       />
       <div className={styles.bottomBar}>
         {showClear ? (
-          <div onClick={onClear}>
-            {clearText} {title}
-          </div>
+          <Popconfirm
+            title={`确定要将所有${title}标记为已读吗`}
+            onConfirm={onClear}
+            okText="是"
+            cancelText="否"
+          >
+            <div>  {clearText} {title}</div>
+          </Popconfirm>
         ) : null}
         {showViewMore ? (
           <div
