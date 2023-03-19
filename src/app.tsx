@@ -10,6 +10,8 @@ import icons from '@/components/IconSelect/icons'
 import storage from "@/utils/storage";
 
 const loginPath = '/user/login';
+const bindEmailPath = '/bindeMailResult'
+const notRequiredPath = [loginPath, bindEmailPath]
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -132,7 +134,6 @@ export const request: RequestConfig = {
         options,
       }
     );
-    return {}
   }],
 
 };
@@ -150,7 +151,14 @@ const defaultRouters = [
     path: '/notice',
     component: './notice/index',
     hideInMenu: true
-  }
+  },
+  {
+    name: '邮箱绑定',
+    path: '/bindEmailResult',
+    component: './bindemail/Result',
+    layout: false,
+    hideInMenu: true,
+  },
 ];
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -165,7 +173,7 @@ export const layout: ({ initialState }: { initialState: any }) => { rightContent
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      if (!initialState?.currentUser && notRequiredPath.indexOf(location.pathname) === -1) {
         history.push(loginPath);
       }
     },

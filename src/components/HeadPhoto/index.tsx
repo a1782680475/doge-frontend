@@ -2,8 +2,8 @@ import {useModel} from "@@/plugin-model/useModel";
 import {Avatar} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import styles from './index.less';
-import {AvatarSize} from "_antd@4.16.13@antd/lib/avatar/SizeContext";
 import React from "react";
+import { AvatarSize } from "antd/lib/avatar/SizeContext";
 
 const HeadPhoto: React.FC<{ className?: string, size?: AvatarSize, style?: React.CSSProperties, currentUser?: boolean, src?: string }> = (props) => {
   const {initialState} = useModel('@@initialState');

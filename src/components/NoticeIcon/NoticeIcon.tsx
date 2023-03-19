@@ -7,6 +7,7 @@ import type { NoticeIconTabProps } from './NoticeList';
 import NoticeList from './NoticeList';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import { NoticeType } from './NoticeType';
 const { TabPane } = Tabs;
 
 export type NoticeIconProps = {

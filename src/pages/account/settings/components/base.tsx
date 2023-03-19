@@ -37,11 +37,10 @@ const validatorEmail = (rule: any, value: string, callback: (message?: string) =
 };
 
 const BaseView: React.FC = () => {
-  const {initialState} = useModel('@@initialState');
   const [fileList, setFileList] = useState<any[]>([]);
   const [headPhoto, setHeadPhoto] = useState<string>('');
   const {data: userInfo, loading} = useRequest(() => {
-    return queryUser(initialState?.currentUser?.userId);
+    return queryUser();
   }, {
     onSuccess: (result) => {
       setHeadPhoto(result.avatar);
@@ -104,7 +103,7 @@ const BaseView: React.FC = () => {
   );
 
   const handleFinish = async (values: any) => {
-    updateUserInfo(userInfo.id,
+    updateUserInfo(
       {
         ...values,
         avatar: headPhoto,

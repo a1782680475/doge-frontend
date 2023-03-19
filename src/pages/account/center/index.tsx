@@ -2,16 +2,14 @@ import {Card, Col, Divider, Row} from 'antd';
 import React from 'react';
 import {GridContent} from '@ant-design/pro-layout';
 import {useRequest, useModel} from 'umi';
-import type {RouteChildrenProps} from 'react-router';
 import styles from './Center.less';
 import {queryUser} from "@/services/api/user/user";
 import HeadPhoto from "@/components/HeadPhoto";
 import {HomeOutlined, MailOutlined, PhoneOutlined} from "@ant-design/icons";
 
-const Center: React.FC<RouteChildrenProps> = () => {
-  const {initialState} = useModel('@@initialState');
+const Center: React.FC = () => {
   const {data: userInfo, loading} = useRequest(() => {
-    return queryUser(initialState?.currentUser?.userId);
+    return queryUser();
   });
 //  渲染用户信息
   const renderUserInfo = () => {

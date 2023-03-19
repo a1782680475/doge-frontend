@@ -25,6 +25,7 @@
     name: '个人页',
     icon: 'user',
     path: '/account',
+    hideInMenu: true,
     routes: [
       {
         path: '/account',
@@ -115,6 +116,13 @@
     path: '/notice',
     component: './notice/index',
     hideInMenu: true
+  },
+  {
+    name: '邮箱绑定',
+    layout: false,
+    path: '/bindEmailResult',
+    component: './bindemail/Result',
+    hideInMenu: true,
   },
   {
     path: '/',
