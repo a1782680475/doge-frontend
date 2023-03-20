@@ -47,8 +47,9 @@ export async function sendVerificationCodeForChangeEmail() {
 
 /** 用户账户绑定邮箱修改验证码验证 POST /changeEmail/verificationCodeVerify */
 export async function verifyCodeForChangeEmail(code: string) {
-  return request(`/user/changeEmail/verificationCodeVerify/${code}`, {
+  return request('/user/changeEmail/verificationCodeVerify', {
     method: 'POST',
+    data: code
   });
 }
 
@@ -61,8 +62,9 @@ export async function sendVerificationCodeForChangePassword() {
 
 /** 用户账户密码修改验证码验证 POST /changePassword/verificationCodeVerify */
 export async function verifyCodeForChangePassword(code: string) {
-  return request(`/user/changePassword/verificationCodeVerify/${code}`, {
+  return request('/user/changePassword/verificationCodeVerify', {
     method: 'POST',
+    data: code
   });
 }
 
@@ -70,6 +72,6 @@ export async function verifyCodeForChangePassword(code: string) {
 export async function changePassword(password: string) {
   return request('/user/changePassword', {
     method: 'POST',
-    data: { password: rsaUtils.encrypt(password) }
+    data: rsaUtils.encrypt(password)
   });
 }

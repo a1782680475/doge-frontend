@@ -1,4 +1,5 @@
-import {request} from 'umi';
+import rsaUtils from '@/utils/rsaUtils';
+import { request } from 'umi';
 
 /** 用户列表获取 GET /sys/user/pageList */
 export async function queryPageList(params?: { [key: string]: any }) {
@@ -9,7 +10,7 @@ export async function queryPageList(params?: { [key: string]: any }) {
 }
 
 /** 用户角色获取 GET /sys/user/roleList */
-export async function queryRoleList(params: { id: number}) {
+export async function queryRoleList(params: { id: number }) {
   return request('/sys/user/roleList', {
     method: 'GET',
     params
@@ -54,3 +55,10 @@ export async function disableUserBatch(ids: number[]) {
   });
 }
 
+/** 用户账户密码重置 POST /resetPassword */
+export async function resetPassword(data: { id: number, password: string }) {
+  return request('/sys/user/resetPassword', {
+    method: 'POST',
+    data: { id: data.id, password: rsaUtils.encrypt(data.password) }
+  });
+}

@@ -1,8 +1,8 @@
-import React, {useState, useRef} from 'react';
-import ProTable, {ProColumns, ActionType} from '@ant-design/pro-table';
-import {Button, Drawer, Dropdown, Menu, message} from 'antd';
-import {PageContainer} from '@ant-design/pro-layout';
-import {useAccess, Access} from 'umi';
+import React, { useState, useRef } from 'react';
+import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
+import { Button, Drawer, Dropdown, Menu, message } from 'antd';
+import { PageContainer } from '@ant-design/pro-layout';
+import { useAccess, Access } from 'umi';
 import {
   queryPageList,
   enableUser,
@@ -10,12 +10,14 @@ import {
   settingRole,
   enableUserBatch,
   disableUserBatch,
+  resetPassword,
 } from '@/services/api/system/user';
-import {EnableIcon, DisableIcon} from '@/components/Icon/icons';
-import {Confirm} from '@/utils/confirm';
-import {DownOutlined} from '@ant-design/icons';
-import ProDescriptions, {ProDescriptionsItemProps} from "@ant-design/pro-descriptions";
+import { EnableIcon, DisableIcon } from '@/components/Icon/icons';
+import { Confirm } from '@/utils/confirm';
+import { DownOutlined } from '@ant-design/icons';
+import ProDescriptions, { ProDescriptionsItemProps } from "@ant-design/pro-descriptions";
 import RoleSetting from "@/pages/system/UserManage/UserList/components/RoleSetting";
+import ResetPassword from './components/ResetPassword';
 
 const UserList: React.FC = () => {
   const access = useAccess();
@@ -24,10 +26,11 @@ const UserList: React.FC = () => {
   const [currentRecord, setCurrentRecord] = useState<API.UserListItem>();
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [showRoleSetting, setShowRoleSetting] = useState<boolean>(false);
+  const [showResetPassword, setShowResetPassword] = useState<boolean>(false);
 
   /** 用户列表查询 */
   const queryUserList = async (params: API.PageParams, sorter: any, filter: any) => {
-    const result = await queryPageList({...params, sorter, ...filter});
+    const result = await queryPageList({ ...params, sorter, ...filter });
     return result.data;
   }
 
@@ -69,6 +72,17 @@ const UserList: React.FC = () => {
     return false;
   }
 
+  /** 用户密码重置 */
+  const handlerResetPassword = async (data: { id: number, password: string }) => {
+    if (currentRecord) {
+      const result = await resetPassword(data);
+      if (result.success) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /** 用户批量启用 */
   const handleEnableBatch = async () => {
     const idArray = getIdArray();
@@ -88,7 +102,7 @@ const UserList: React.FC = () => {
   /** 批量操作菜单 */
   const menu = (
     <Menu>
-      {access.userEnable && <Menu.Item key="enableBatch" icon={<EnableIcon/>}>
+      {access.userEnable && <Menu.Item key="enableBatch" icon={<EnableIcon />}>
         <span
           key="enableBatch"
           onClick={() => {
@@ -99,10 +113,10 @@ const UserList: React.FC = () => {
             });
           }}
         >
-         启用
+          启用
         </span>,
       </Menu.Item>}
-      {access.userDisable && <Menu.Item key="disableBatch" icon={<DisableIcon/>}>
+      {access.userDisable && <Menu.Item key="disableBatch" icon={<DisableIcon />}>
         <span
           key="disableBatch"
           onClick={() => {
@@ -122,16 +136,6 @@ const UserList: React.FC = () => {
   /** 操作菜单 */
   const optionMenu = (
     <Menu>
-      {access.roleSetting && <Menu.Item key="roleSetting">
-        <span
-          key="roleSetting"
-          onClick={() => {
-            setShowRoleSetting(true);
-          }}
-        >
-          角色分配
-        </span>
-      </Menu.Item>}
       {access.userEnable && <Menu.Item key="enable">
         <span
           key="enable"
@@ -143,7 +147,7 @@ const UserList: React.FC = () => {
             });
           }}
         >
-         启用
+          启用
         </span>
       </Menu.Item>}
       {access.userDisable && <Menu.Item key="disable">
@@ -158,6 +162,26 @@ const UserList: React.FC = () => {
           }}
         >
           禁用
+        </span>
+      </Menu.Item>}
+      {access.roleSetting && <Menu.Item key="roleSetting">
+        <span
+          key="roleSetting"
+          onClick={() => {
+            setShowRoleSetting(true);
+          }}
+        >
+          角色分配
+        </span>
+      </Menu.Item>}
+      {access.resetPassword && <Menu.Item key="resetPassword">
+        <span
+          key="resetPassword"
+          onClick={() => {
+            setShowResetPassword(true);
+          }}
+        >
+          密码重置
         </span>
       </Menu.Item>}
     </Menu>
@@ -236,7 +260,7 @@ const UserList: React.FC = () => {
               className="ant-dropdown-link"
               hidden={record.username === 'super'}
               onClick={e => e.preventDefault()}>
-              更多&nbsp;<DownOutlined/>
+              更多&nbsp;<DownOutlined />
             </a>
           </Dropdown>
         </Access>
@@ -295,7 +319,7 @@ const UserList: React.FC = () => {
             accessible={access.userEnable || access.userDisable}
           >
             <Dropdown overlay={menu} placement="bottomLeft">
-              <Button>批量操作<DownOutlined/></Button>
+              <Button>批量操作<DownOutlined /></Button>
             </Dropdown>
           </Access>
         ]}
@@ -305,7 +329,7 @@ const UserList: React.FC = () => {
         modalVisible={showRoleSetting}
         onSubmit={async (value: Record<string, any>) => {
           if (currentRecord) {
-            const success = await handlerRoleSetting({id: currentRecord.id, roleIds: value.role});
+            const success = await handlerRoleSetting({ id: currentRecord.id, roleIds: value.role });
             if (success) {
               setCurrentRecord(undefined);
               setShowRoleSetting(false);
@@ -320,6 +344,23 @@ const UserList: React.FC = () => {
           setShowRoleSetting(false);
           setCurrentRecord(undefined);
         }}
+      />
+      <ResetPassword onSubmit={async (value: Record<string, any>) => {
+        if (currentRecord) {
+          const success = await handlerResetPassword({ id: currentRecord.id, password: value.password });
+          if (success) {
+            setCurrentRecord(undefined);
+            setShowResetPassword(false);
+            message.success('密码重置完成');
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }
+      }} onCancel={() => {
+        setShowResetPassword(false);
+      }}
+        modalVisible={showResetPassword}
       />
       <Drawer
         width={600}

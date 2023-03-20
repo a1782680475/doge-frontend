@@ -19,6 +19,7 @@ export default function access(initialState: { currentUser?: API.CurrentUser | u
     userEdit: hasAuthority('sys:user:edit'),
     userDelete: hasAuthority('sys:user:delete'),
     roleSetting: hasAuthority('sys:user:roleSetting'),
+    resetPassword: hasAuthority('sys:user:resetPassword'),
     userEnable: hasAuthority('sys:user:enable'),
     userDisable: hasAuthority('sys:user:disable'),
     role: hasAuthority('sys:role'),

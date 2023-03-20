@@ -194,7 +194,3 @@ const PasswordChangeDialog: React.FC<PasswordChangeDialogProps> = (props) => {
 };
 
 export default PasswordChangeDialog;
-
-function setInitialState(arg0: (s: any) => any) {
-    throw new Error("Function not implemented.");
-}
