@@ -10,8 +10,9 @@ import icons from '@/components/IconSelect/icons'
 import storage from "@/utils/storage";
 
 const loginPath = '/user/login';
-const bindEmailPath = '/bindeMailResult'
-const notRequiredPath = [loginPath, bindEmailPath]
+const bindEmailPath = '/bindEmailResult'
+const findPasswordPath = '/findPassword'
+const notRequiredPath = [loginPath, bindEmailPath, findPasswordPath]
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
@@ -156,6 +157,13 @@ const defaultRouters = [
     name: '邮箱绑定',
     path: '/bindEmailResult',
     component: './bindemail/Result',
+    layout: false,
+    hideInMenu: true,
+  },
+  {
+    name: '找回密码',
+    path: '/findPassword',
+    component: './user/FindPassword',
     layout: false,
     hideInMenu: true,
   },

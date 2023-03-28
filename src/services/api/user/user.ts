@@ -30,13 +30,6 @@ export async function sendBindEmail(email: string) {
   });
 }
 
-/** 用户账户绑定邮箱验证 POST /user/bindEmailVerify */
-export async function bindEmailVerify(email: string, token: string) {
-  return request('/user/bindEmailVerify', {
-    method: 'POST',
-    data: { email, token }
-  });
-}
 
 /** 用户账户绑定邮箱更换验证码发送 PUT /user/changeEmail/sendVerificationCode */
 export async function sendVerificationCodeForChangeEmail() {
@@ -45,7 +38,7 @@ export async function sendVerificationCodeForChangeEmail() {
   });
 }
 
-/** 用户账户绑定邮箱修改验证码验证 POST /changeEmail/verificationCodeVerify */
+/** 用户账户绑定邮箱修改验证码验证 POST /user/changeEmail/verificationCodeVerify */
 export async function verifyCodeForChangeEmail(code: string) {
   return request('/user/changeEmail/verificationCodeVerify', {
     method: 'POST',
@@ -60,7 +53,7 @@ export async function sendVerificationCodeForChangePassword() {
   });
 }
 
-/** 用户账户密码修改验证码验证 POST /changePassword/verificationCodeVerify */
+/** 用户账户密码修改验证码验证 POST /user/changePassword/verificationCodeVerify */
 export async function verifyCodeForChangePassword(code: string) {
   return request('/user/changePassword/verificationCodeVerify', {
     method: 'POST',
@@ -68,7 +61,7 @@ export async function verifyCodeForChangePassword(code: string) {
   });
 }
 
-/** 用户账户密码修改 POST /changePassword */
+/** 用户账户密码修改 POST /user/changePassword */
 export async function changePassword(password: string) {
   return request('/user/changePassword', {
     method: 'POST',

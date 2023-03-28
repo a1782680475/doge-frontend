@@ -3,20 +3,20 @@ import {
   MobileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import {Alert, Space, message, Tabs, Form} from 'antd';
-import React, {useState, useRef} from 'react';
-import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText} from '@ant-design/pro-form';
-import {useIntl, Link, history, FormattedMessage, SelectLang, useModel} from 'umi';
+import { Alert, Space, message, Tabs, Form } from 'antd';
+import React, { useState, useRef } from 'react';
+import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import {login} from '@/services/api/login';
-import {getFakeCaptcha} from '@/services/ant-design-pro/login';
+import { login } from '@/services/api/login';
+import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import storage from '@/utils/storage';
 import ImageCaptcha from '@/pages/user/components/ImageCaptcha';
 import styles from './index.less';
 
 const LoginMessage: React.FC<{
   content: string;
-}> = ({content}) => (
+}> = ({ content }) => (
   <Alert
     style={{
       marginBottom: 24,
@@ -31,17 +31,17 @@ const LoginMessage: React.FC<{
 const goto = () => {
   if (!history) return;
   setTimeout(() => {
-    const {query} = history.location;
-    const {redirect} = query as { redirect: string };
+    const { query } = history.location;
+    const { redirect } = query as { redirect: string };
     history.push(redirect || '/');
   }, 10);
 };
 
 const Login: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({type: '', success: true, errorMessage: ''});
+  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({ type: '', success: true, errorMessage: '' });
   const [type, setType] = useState<string>('account');
-  const {initialState, setInitialState} = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
   const childRef = useRef<any>(ImageCaptcha);
   const fetchUserInfo = async () => {
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     setSubmitting(true);
     // 登录
-    const result = await login({...values, type});
+    const result = await login({ ...values, type });
     if (result.success) {
       // 登录成功
       storage.setToken({
@@ -77,24 +77,30 @@ const Login: React.FC = () => {
       await fetchUserInfo();
       goto();
     } else {
-      setUserLoginState({success: false, errorMessage: result.errorMessage});
+      setUserLoginState({ success: false, errorMessage: result.errorMessage });
       updateCaptcha();
     }
     setSubmitting(false);
   };
+  const findPassword = () => {
+    history.push('/findPassword');
+  };
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang>
-        {SelectLang && <SelectLang/>}
+        {SelectLang && <SelectLang />}
       </div>
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>
+            <span>
+              <img className={styles.logo} alt="logo" src="/logo.svg"/>
+            </span>
             <Link to='/'>
               <span className={styles.title}>后台管理系统</span>
             </Link>
           </div>
-          <div className={styles.desc}></div>
+          <div className={styles.desc}>一个简单的基于 Ant Design 的后台管理脚手架</div>
         </div>
         <div className={styles.main}>
           <ProForm
@@ -150,7 +156,7 @@ const Login: React.FC = () => {
                   name="username"
                   fieldProps={{
                     size: 'large',
-                    prefix: <UserOutlined className={styles.prefixIcon}/>,
+                    prefix: <UserOutlined className={styles.prefixIcon} />,
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.username.placeholder',
@@ -172,7 +178,7 @@ const Login: React.FC = () => {
                   name="password"
                   fieldProps={{
                     size: 'large',
-                    prefix: <LockOutlined className={styles.prefixIcon}/>,
+                    prefix: <LockOutlined className={styles.prefixIcon} />,
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.password.placeholder',
@@ -198,12 +204,12 @@ const Login: React.FC = () => {
                     }
                   }
                 },]}>
-                  <ImageCaptcha ref={childRef}/>
+                  <ImageCaptcha ref={childRef} />
                 </Form.Item>
               </>
             )}
 
-            {type === 'mobile' && (
+            {/* {type === 'mobile' && (
               <>
                 <ProFormText
                   fieldProps={{
@@ -283,32 +289,35 @@ const Login: React.FC = () => {
                   }}
                 />
               </>
-            )}
+            )} */}
             <div
               style={{
                 marginBottom: 24,
               }}
             >
               <ProFormCheckbox noStyle name="autoLogin">
-                <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录"/>
+                <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
               </ProFormCheckbox>
               <a
                 style={{
                   float: "right",
                 }}
+                onClick={() => {
+                  findPassword();
+                }}
               >
-                <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码"/>
+                <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
               </a>
             </div>
           </ProForm>
-          <Space className={styles.other} style={{float: 'right'}}>
+          {/* <Space className={styles.other} style={{float: 'right'}}>
             <a>
               <FormattedMessage id="pages.login.register" defaultMessage="注册账户"/>
             </a>
-          </Space>
+          </Space> */}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

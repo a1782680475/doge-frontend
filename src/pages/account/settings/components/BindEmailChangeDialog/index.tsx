@@ -43,7 +43,7 @@ const BindEmailChangeDialog: React.FC<PasswordChangeDialogProps> = (props) => {
             sendVerificationCodeForChangeEmail().then((result) => {
                 setSendCodeLoading(false);
                 if (result.data.isSuccess) {
-                    message.success(`验证码已发送到${props.email}，请在5分钟内完成验证`);
+                    message.success(`验证码已发送到 ${props.email} ，请在5分钟内完成验证`);
 
                 } else {
                     message.error(result.data.errorMessage);

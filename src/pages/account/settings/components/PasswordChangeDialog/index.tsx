@@ -48,7 +48,7 @@ const PasswordChangeDialog: React.FC<PasswordChangeDialogProps> = (props) => {
             sendVerificationCodeForChangePassword().then((result) => {
                 setSendCodeLoading(false)
                 if (result.data.isSuccess) {
-                    message.success(`验证码已发送到${props.email}，请在5分钟内完成验证`);
+                    message.success(`验证码已发送到 ${props.email} ，请在5分钟内完成验证`);
 
                 } else {
                     message.error(result.data.errorMessage);
@@ -142,7 +142,7 @@ const PasswordChangeDialog: React.FC<PasswordChangeDialogProps> = (props) => {
             (
                 <div className={styles.dialog}>
                     <Form
-                        name="email"
+                        name="password"
                         labelCol={{ span: 5 }}
                         autoComplete="off"
                         form={setpForm2}

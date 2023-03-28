@@ -1,0 +1,46 @@
+@import '~antd/es/style/themes/default.less';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  background: @layout-body-background;
+  position: relative;
+}
+
+.main {
+  width: 550px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 15px;
+}
+
+.header {
+  height: 30px;
+  line-height: 30dpx;
+  a {
+    text-decoration: none;
+  }
+  margin-bottom: 60px;
+}
+
+.logo {
+  height: 30px;
+  margin-right: 16px;
+  vertical-align: top;
+}
+
+.title {
+  position: relative;
+  top: 0px;
+  color: @heading-color;
+  font-weight: 600;
+  font-size: 22px;
+  font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}

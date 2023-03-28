@@ -1,10 +1,12 @@
-import { bindEmailVerify } from "@/services/api/user/user";
+
+import { bindEmailVerify } from "@/services/api/auth";
 import { Button, Result, Spin } from "antd";
 import { useLocation, useRequest, history } from "umi";
 
 const BindEmailResult: React.FC = () => {
     const location = useLocation();
     const { data: verifyResult, loading } = useRequest(() => {
+        alert();
         return bindEmailVerify(location.query.email, location.query.token);
     });
     return (

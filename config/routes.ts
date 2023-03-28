@@ -125,6 +125,13 @@
     hideInMenu: true,
   },
   {
+    name: '找回密码',
+    layout: false,
+    path: '/findPassword',
+    component: './user/FindPassword',
+    hideInMenu: true,
+  },
+  {
     path: '/',
     redirect: '/workspace',
   },
