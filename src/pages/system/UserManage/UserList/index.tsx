@@ -49,11 +49,11 @@ const UserList: React.FC = () => {
   /** 用户新增 */
   const handleAdd = async (value: { username: string, password: string }) => {
     const result = await addUser(value);
-    if (result.success) {
+    if (result.data.isSuccess) {
       message.success('添加成功');
       return true;
     }
-    message.error(result.errorMessage);
+    message.error(result.data.errorMessage);
     return false;
   }
 
