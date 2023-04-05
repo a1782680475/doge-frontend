@@ -17,6 +17,14 @@ export async function queryRoleList(params: { id: number }) {
   });
 }
 
+/** 用户新增 POST /sys/user/add */
+export async function addUser(data: { username: string, password: string }) {
+  return request('/sys/user/add', {
+    method: 'POST',
+    data: { username: data.username, password: rsaUtils.encrypt(data.password) }
+  });
+}
+
 /** 用户启用 PUT /sys/user/enable/{id} */
 export async function enableUser(id: number) {
   return request(`/sys/user/enable/${id}`, {

@@ -11,17 +11,20 @@ import {
   enableUserBatch,
   disableUserBatch,
   resetPassword,
+  addUser,
 } from '@/services/api/system/user';
 import { EnableIcon, DisableIcon } from '@/components/Icon/icons';
 import { Confirm } from '@/utils/confirm';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import ProDescriptions, { ProDescriptionsItemProps } from "@ant-design/pro-descriptions";
 import RoleSetting from "@/pages/system/UserManage/UserList/components/RoleSetting";
 import ResetPassword from './components/ResetPassword';
+import CreateForm from './components/CreateForm';
 
 const UserList: React.FC = () => {
   const access = useAccess();
   const actionRef = useRef<ActionType>();
+  const [createModalVisible, handleCreateModalVisible] = useState<boolean>(false);
   const [selectedRowsState, setSelectedRows] = useState<API.UserListItem[]>([]);
   const [currentRecord, setCurrentRecord] = useState<API.UserListItem>();
   const [showDetail, setShowDetail] = useState<boolean>(false);
@@ -41,6 +44,17 @@ const UserList: React.FC = () => {
       idArray.push(userListItem.id);
     });
     return idArray;
+  }
+
+  /** 用户新增 */
+  const handleAdd = async (value: { username: string, password: string }) => {
+    const result = await addUser(value);
+    if (result.success) {
+      message.success('添加成功');
+      return true;
+    }
+    message.error(result.errorMessage);
+    return false;
   }
 
   /** 用户启用 */
@@ -321,7 +335,21 @@ const UserList: React.FC = () => {
             <Dropdown overlay={menu} placement="bottomLeft">
               <Button>批量操作<DownOutlined /></Button>
             </Dropdown>
-          </Access>
+          </Access>,
+          <Access
+            key={"roleAdd"}
+            accessible={access.roleAdd}
+          >
+            <Button
+              type="primary"
+              key="primary"
+              onClick={() => {
+                handleCreateModalVisible(true);
+              }}
+            >
+              <PlusOutlined />新建
+            </Button>
+          </Access>,
         ]}
       />
       <RoleSetting
@@ -343,6 +371,26 @@ const UserList: React.FC = () => {
         onCancel={() => {
           setShowRoleSetting(false);
           setCurrentRecord(undefined);
+        }}
+      />
+      <CreateForm
+        key="create"
+        modalVisible={createModalVisible}
+        onCancel={() => {
+          handleCreateModalVisible(false);
+          setCurrentRecord(undefined);
+        }}
+        onSubmit={async (value: Record<string, any>) => {
+          const success = await handleAdd({ username: value.username, password: value.password });
+          if (success) {
+            handleCreateModalVisible(false);
+            setCurrentRecord(undefined);
+            if (success) {
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }
         }}
       />
       <ResetPassword onSubmit={async (value: Record<string, any>) => {
