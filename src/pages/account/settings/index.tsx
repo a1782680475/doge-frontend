@@ -4,6 +4,7 @@ import { Menu } from 'antd';
 import BaseView from './components/base';
 import SecurityView from './components/security';
 import styles from './style.less';
+import NotificationView from './components/notification';
 
 const { Item } = Menu;
 
@@ -17,6 +18,7 @@ const Settings: React.FC = () => {
   const menuMap: Record<string, React.ReactNode> = {
     base: '基本设置',
     security: '安全设置',
+    notification: '消息通知'
   };
 
   const [initConfig, setInitConfig] = useState<SettingsState>({
@@ -63,6 +65,8 @@ const Settings: React.FC = () => {
         return <BaseView />;
       case 'security':
         return <SecurityView />;
+      case 'notification':
+        return <NotificationView/>;
       default:
         return null;
     }

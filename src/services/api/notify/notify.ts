@@ -1,4 +1,4 @@
-import {request} from 'umi';
+import { request } from 'umi';
 
 /** 提醒获取 GET /notify/remind/remindPageList */
 export async function queryRemindPageList(params: { current: number, pageSize: number }) {
@@ -9,7 +9,7 @@ export async function queryRemindPageList(params: { current: number, pageSize: n
 }
 
 /** 指定数目未读提醒获取 GET /notify/remind/unreadList */
-export async function queryUnreadRemindList(params: { count: number}) {
+export async function queryUnreadRemindList(params: { count: number }) {
   return request('/notify/remind/unreadList', {
     method: 'GET',
     params
@@ -46,7 +46,7 @@ export async function queryMessagePageList(params: { current: number, pageSize: 
 }
 
 /** 指定数目未读私信获取 GET /notify/message/unreadList */
-export async function queryUnreadMessageList(params: { count: number}) {
+export async function queryUnreadMessageList(params: { count: number }) {
   return request('/notify/message/unreadList', {
     method: 'GET',
     params
@@ -83,7 +83,7 @@ export async function queryBulletinPageList(params: { current: number, pageSize:
 }
 
 /** 指定数目未读私信获取 GET /notify/bulletin/unreadList */
-export async function queryUnreadBulletinList(params: { count: number}) {
+export async function queryUnreadBulletinList(params: { count: number }) {
   return request('/notify/bulletin/unreadList', {
     method: 'GET',
     params
@@ -108,5 +108,20 @@ export async function bulletinRead(id: number) {
 export async function bulletinClearUnread() {
   return request('/notify/bulletin/clearUnread', {
     method: 'PUT',
+  });
+}
+
+/** 消息订阅配置获取 GET /notify/subscriptionConfig */
+export async function querySubscriptionConfig() {
+  return request('/notify/subscriptionConfig', {
+    method: 'GET',
+  });
+}
+
+/** 消息订阅配置更新 PUT /notify/subscriptionConfig */
+export async function setSubscriptionConfig(key: string, isEnabled: boolean) {
+  return request('/notify/subscriptionConfig', {
+    method: 'PUT',
+    data: { key, isEnabled }
   });
 }
