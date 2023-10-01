@@ -72,6 +72,20 @@
     ]
   },
   {
+    name: '消息管理',
+    icon: 'MailOutlined',
+    access: 'msg',
+    path: '/msg',
+    routes: [
+      {
+        name: '公告管理',
+        path: 'bulletin',
+        component: './message/BulletinManage/BulletinList',
+        access: 'bulletin',
+      },
+    ]
+  },
+  {
     name: '系统监控',
     icon: 'DashboardOutlined',
     access: 'monitor',

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ModalForm, ProFormText, ProFormTextArea } from "@ant-design/pro-form";
+import { ModalForm, ProFormText } from "@ant-design/pro-form";
 import { Form } from "antd";
 
 export type FormValueType = Partial<API.RuleListItem>;
@@ -44,7 +44,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
             required: true,
             message: '用户名为必填项',
           },
-          ({ getFieldValue }) => ({
+          ({ }) => ({
             validator(_, value) {
               const patrn = /^[a-zA-Z][a-zA-Z0-9_]+$/;
               if (patrn.test(value)) {

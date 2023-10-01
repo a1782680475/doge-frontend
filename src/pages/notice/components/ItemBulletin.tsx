@@ -55,7 +55,7 @@ const ItemBulletin: React.FC = () => {
                   title={item.title}
                   description={item.sendTime}
                 />
-                <div style={{ marginTop: 5 }} >{item.content}</div>
+                <div style={{ marginTop: 5 }} dangerouslySetInnerHTML={{ __html: item?.content ?? '' }}></div>
               </List.Item>
             )}
           />

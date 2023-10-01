@@ -169,6 +169,15 @@ declare namespace API {
     success?: boolean;
   };
 
+  type BulletinListItem = {
+    id: number;
+    title: string;
+    content: string;
+    createBy: string,
+    createTime: string
+  };
+
+
   type FakeCaptcha = {
     code?: number;
     status?: string;

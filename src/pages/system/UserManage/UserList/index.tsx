@@ -17,9 +17,9 @@ import { EnableIcon, DisableIcon } from '@/components/Icon/icons';
 import { Confirm } from '@/utils/confirm';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import ProDescriptions, { ProDescriptionsItemProps } from "@ant-design/pro-descriptions";
-import RoleSetting from "@/pages/system/UserManage/UserList/components/RoleSetting";
-import ResetPassword from './components/ResetPassword';
-import CreateForm from './components/CreateForm';
+import CreateForm from '../components/CreateForm';
+import ResetPassword from '../components/ResetPassword';
+import RoleSetting from '../components/RoleSetting';
 
 const UserList: React.FC = () => {
   const access = useAccess();
